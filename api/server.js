@@ -67,7 +67,8 @@ app.post('/api/addpaciente/', async function (req, res) {
 
         const network = await gateway.getNetwork('meucanal');
         const contract = network.getContract('prontuario');
-
+        
+        req.body.paciente.estado = "AGUARDANDO ATENDIMENTO"
         await contract.submitTransaction('criarPaciente', req.body.paciente);
         res.send('Transaction has been submitted');
 
