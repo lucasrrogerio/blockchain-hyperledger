@@ -1,0 +1,28 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+OrdererOrgs:
+  - Name: PrimeUp
+    Domain: primeup.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: ordenador
+
+PeerOrgs:
+  - Name: Banco
+    Domain: banco.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+
+  - Name: Cliente
+    Domain: cliente.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1

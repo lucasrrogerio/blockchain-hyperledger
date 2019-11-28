@@ -1,0 +1,57 @@
+---
+
+name: "rede.primeup"
+
+x-type: "hlfv1"
+
+description: "The basic network"
+
+version: "1.0"
+
+client:
+  organization: Org1
+
+channels:
+
+  meucanal:
+
+    orderers:
+      - ordenador.primeup.com
+
+    peers:
+      peer0.banco.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  Org1:
+    mspid: Org1MSP
+
+    peers:
+      - peer0.banco.com
+
+orderers:
+  ordenador.primeup.com:
+
+    url: grpcs://localhost:7050
+
+    grpcOptions:
+      ssl-target-name-override: ordenador.primeup.com
+
+    tlsCACerts:
+      path: /home/lucas/rede_primeup/crypto-config/ordererOrganizations/primeup.com/tlsca/tlsca.primeup.com-cert.pem
+
+peers:
+  peer0.banco.com:
+
+    url: grpcs://localhost:7051
+
+    grpcOptions:
+      ssl-target-name-override: peer0.banco.com
+      hostnameOverride: peer0.banco.com
+      request-timeout: 120
+
+    tlsCACerts:
+      path: /home/lucas/rede_primeup/crypto-config/peerOrganizations/banco.com/tlsca/tlsca.banco.com-cert.pem
