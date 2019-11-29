@@ -307,7 +307,8 @@ class Prontuario extends Contract {
 
     async criarPaciente(ctx, pacienteNumero, paciente) {
         console.info('============= START : Criar Paciente ===========');
-        await ctx.stub.putState(pacienteNumero, Buffer.from(JSON.stringify(paciente)));
+        const p = JSON.parse(paciente)
+        await ctx.stub.putState(pacienteNumero, Buffer.from(JSON.stringify(p)));
         console.info('============= END : Criar Paciente ===========');
     }
 

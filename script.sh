@@ -12,13 +12,6 @@ peer channel create -o ordenador.primeup.com:7050 -c meucanal -f ./channel-artif
 
 peer channel join -b meucanal.block
 
-#EXEMPLO2
-peer chaincode install -n mycc -v 1.0 -l node -p /opt/gopath/src/github.com/chaincode/chaincode_example02/node/
-peer chaincode instantiate -o ordenador.primeup.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/msp/tlscacerts/tlsca.primeup.com-cert.pem -C meucanal -n mycc -l node -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "OR ('Org1MSP.member','Org2MSP.member')"
-
-peer chaincode query -C meucanal -n mycc -c '{"Args":["query","a"]}'
-peer chaincode invoke -C meucanal -n mycc -c '{"Args":["invoke","b","a","20"]}' -o ordenador.primeup.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/msp/tlscacerts/tlsca.primeup.com-cert.pem --certfile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/banco.com/peers/peer0.banco.com/tls/ca.crt
-
 #PRONTUARIO
 peer chaincode install -n prontuario -v 1.0 -l node -p /opt/gopath/src/github.com/chaincode/prontuario/javascript/
 peer chaincode instantiate -o ordenador.primeup.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/msp/tlscacerts/tlsca.primeup.com-cert.pem -C meucanal -n prontuario -l node -v 1.0 -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member')"

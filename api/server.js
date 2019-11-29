@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 const { FileSystemWallet, Gateway } = require('fabric-network');
 const ccpPath = yaml.safeLoad(fs.readFileSync('/home/lucas/rede_primeup/gateway/networkConnection.yaml', 'utf8'));
 
-app.get('/api/querypacientes', async function (req, res) {
+app.get('/api/buscapacientes', async function (req, res) {
     try {
 
         const userName = 'Admin@banco.com';
@@ -34,7 +34,7 @@ app.get('/api/querypacientes', async function (req, res) {
 });
 
 
-app.get('/api/querypaciente/:paciente_index', async function (req, res) {
+app.get('/api/buscapaciente/:paciente_index', async function (req, res) {
     try {
 
         const userName = 'Admin@banco.com';
@@ -47,8 +47,8 @@ app.get('/api/querypaciente/:paciente_index', async function (req, res) {
         const contract = network.getContract('prontuario');
 
         const result = await contract.evaluateTransaction('queryPaciente', req.params.paciente_index);
-        res.status(200).json({paciente: JSON.parse(result.toString())});
-
+        let paciente = JSON.parse(result.toString());
+        res.status(200).json({paciente: paciente});
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         res.status(500).json({error: error});
@@ -56,7 +56,7 @@ app.get('/api/querypaciente/:paciente_index', async function (req, res) {
     }
 });
 
-app.post('/api/addpaciente/', async function (req, res) {
+app.post('/api/adicionapaciente/:paciente_index', async function (req, res) {
     try {
 
         const userName = 'Admin@banco.com';
@@ -68,8 +68,8 @@ app.post('/api/addpaciente/', async function (req, res) {
         const network = await gateway.getNetwork('meucanal');
         const contract = network.getContract('prontuario');
         
-        req.body.paciente.estado = "AGUARDANDO ATENDIMENTO"
-        await contract.submitTransaction('criarPaciente', req.body.paciente);
+        req.body.doctype = 'paciente';
+        await contract.submitTransaction('criarPaciente', req.params.paciente_index, JSON.stringify(req.body));
         res.send('Transaction has been submitted');
 
         // Disconnect from the gateway.
@@ -94,7 +94,6 @@ app.put('/api/mudarestadopaciente/:paciente_index', async function (req, res) {
         const contract = network.getContract('prontuario');
 
         await contract.submitTransaction('mudarEstadoPaciente', req.params.paciente_index, req.body.estado);
-        console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
 
         // Disconnect from the gateway.
