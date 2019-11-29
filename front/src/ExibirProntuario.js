@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import {
+  useParams
+} from "react-router-dom";
 
 export default class InserirPaciente extends Component {
 
@@ -12,7 +15,7 @@ export default class InserirPaciente extends Component {
                 cpf: '',
                 tipoDeSangue: '',
                 sexo: '',
-                estado: 'Em atendimento',
+                estado: '',
                 amnese: {
                     QP: '',
                     HDA: {
@@ -66,183 +69,177 @@ export default class InserirPaciente extends Component {
         }
     }
 
-    salvar(evento) {
-        evento.preventDefault();
-        console.log(this.state.paciente)
-        console.log(JSON.stringify(this.state.paciente))
+    componentDidMount() {
+        var id = this.props.match.params['id'];
+        console.log(id)
         $.ajax({
-            url: "/api/adicionapaciente/PACIENTE10",
-            contentType: 'application/json',
-            type: 'POST',
-            data: JSON.stringify(this.state.paciente),
-            success: novaListagem => window.location.replace('/'),
-            error: resposta => console.log(resposta)
-        })
+            crossDomain: true,
+            url: "/api/buscapaciente/" + id,
+            dataType: 'json',
+            success: resposta => {
+                console.log(resposta)
+                this.setState({ paciente: resposta })
+            }
+        });
     }
-
-    mudarEstado(prop, evento) {
-        evento.preventDefault();
-        let paciente = this.state.paciente;
-        paciente[prop] = evento.target.value;
-        this.setState({ paciente: paciente });
-    };
 
     render() {
         return <>
             <div className="container mt-3">
-                <form onSubmit={this.salvar.bind(this)}>
-                        <h5>Dados do paciente</h5>
+                <form>
+                    <h5>Dados do paciente</h5>
                     <div class="row">
                         <div class="col">
                             <label>Nome completo</label>
                             <input type="text" className="form-control"
-                                onChange={this.mudarEstado.bind(this, 'nome')} />
+                                value={this.state.paciente.nome} disabled/>
                         </div>
                         <div class="col">
                             <label>Data de Nascimento</label>
                             <input type="text" className="form-control"
-                                onChange={this.mudarEstado.bind(this, 'dataNascimento')} />
+                                value={this.state.paciente.dataNascimento} disabled/>
                         </div>
                         </div>
-                        <div className="form-group">
+                    <div class="row">
+                        <div class="col">
                         <label>CPF</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'cpf')}/>
+                            value={this.state.paciente.cpf} disabled/>
                     </div>
-                    <div className="form-group">
+                        <div class="col">
                         <label>Tipo Sanguíneo</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'tipoDeSangue')}/>
+                            value={this.state.paciente.tipoDeSangue} disabled/>
                     </div>
-                    <div className="form-group">
+                    </div>
+                    <div class="row">
+                        <div class="col">
                         <label>Sexo</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'sexo')}/>
+                            value={this.state.paciente.sexo} disabled/>
+                        </div>
+                        <div class="col">
+                        <label>Estado</label>
+                        <input type="text" className="form-control" 
+                            value={this.state.paciente.estado} disabled/>
+                        </div>
                     </div>
+                    <div className="mt-3"/>
                     <h5>Atendimento</h5>
                     <div className="form-group">
                         <label>Queixa Principal</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amnese.QP')}/>
-                        <small>Motivo principal do paciente ter ido ao hospital</small>
+                            value={this.state.paciente.amnese.QP} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Data inicial da queixa</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amnese.HDA.epocaInicial')}/>
-                        <small>Início da dor</small>
+                            value={this.state.paciente.amnese.HDA.epocaInicio} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Onde ocorre a dor</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.onde')}/>
-                        <small>Local da dor</small>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.onde} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Tipo da dor</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.tipo')}/>
-                        <small>Ex: queimação, cólica</small>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.tipo} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Duração da dor</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.duracao')}/>
-                        <small>Cíclia ou não</small>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.duracao} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Intensidade da dor</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.duracao')}/>
-                        <small>Escala de 1 à 10</small>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.intensidade} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Melhora</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.melhora')}/>
-                        <small>Paciente realiza algo que melhora a dor</small>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.melhora} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Piora</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.piora')}/>
-                        <small>Paciente realiza algo que piora a dor</small>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.piora} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Acompanha outra coisa?</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HDA.caracterizacaoDaDor.acompanhamento')}/>
+                            value={this.state.paciente.amnese.HDA.caracterizacaoDaDor.acompanhamento} disabled/>
                     </div>
                     <h5 >Antecedentes pessoais</h5>
                     <div className="form-group">
                         <label>Passou por cirurgias recentemente</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HMP.cirurgias')}/>
+                            value={this.state.paciente.amnese.HMP.cirurgias} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Possui alergias</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HMP.alergias')}/>
+                            value={this.state.paciente.amnese.HMP.alergias} disabled/>
                     </div>
                     <h5>Histórico Familiar</h5>
                     <div className="form-group">
                         <label>Histórico familiar - mãe</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HF.mae')}/>
+                            value={this.state.paciente.amnese.HF.mae} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Histórico familiar - pai</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HF.pai')}/>
+                            value={this.state.paciente.amnese.HF.pai} disabled/>
                     </div>
                     <h5>Trabalho</h5>
                     <div className="form-group">
                         <label>Local de Trabalho</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesTrabalho.localTrabalho')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesTrabalho.localTrabalho} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Frequência de estresse no trabalho</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesTrabalho.estresse')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesTrabalho.estresse} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Riscos no trabalho</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesTrabalho.risco')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesTrabalho.risco} disabled/>
                     </div>
                     <h5>Hábitos de Vida</h5>
                     <div className="form-group">
                         <label>Realizou alguma viagem? Para onde? </label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesVida.viagem.local')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesVida.viagem.local} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Uso de medicamentos receitados</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesVida.medicacaoReceitada')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesVida.medicacaoReceitada} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Frequência do uso de álcool</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesVida.alcool')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesVida.alcool} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Frequência do uso do tabaco</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesVida.tabaco')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesVida.tabaco} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Frequência de drogas ilícitas</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesVida.drogasIlicitas')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesVida.drogasIlicitas} disabled/>
                     </div>
                     <div className="form-group">
                         <label>Possui animais de estimação? Quais?</label>
                         <input type="text" className="form-control" 
-                        onChange={this.mudarEstado.bind(this, 'amneses.HPS.condicoesVida.animaisEstimacao')}/>
+                            value={this.state.paciente.amnese.HPS.condicoesVida.animaisEstimacao} disabled/>
                     </div>
-                    <button type="submit" className="btn btn-primary mt-2">Enviar</button>
                 </form>
             </div>
         </>
