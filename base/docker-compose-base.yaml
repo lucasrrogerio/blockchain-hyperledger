@@ -7,37 +7,37 @@ version: '2'
 
 services:
 
-  ordenador.primeup.com:
-    container_name: ordenador.primeup.com
+  ordenador.lucas.com:
+    container_name: ordenador.lucas.com
     extends:
       file: peer-base.yaml
       service: orderer-base
     volumes:
         - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-        - ../crypto-config/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/msp:/var/hyperledger/orderer/msp
-        - ../crypto-config/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/tls/:/var/hyperledger/orderer/tls
-        - ordenador.primeup.com:/var/hyperledger/production/orderer
+        - ../crypto-config/ordererOrganizations/lucas.com/orderers/ordenador.lucas.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/lucas.com/orderers/ordenador.lucas.com/tls/:/var/hyperledger/orderer/tls
+        - ordenador.lucas.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
 
-  peer0.banco.com:
-    container_name: peer0.banco.com
+  peer0.hospital.com:
+    container_name: peer0.hospital.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer0.banco.com
-      - CORE_PEER_ADDRESS=peer0.banco.com:7051
+      - CORE_PEER_ID=peer0.hospital.com
+      - CORE_PEER_ADDRESS=peer0.hospital.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.banco.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.hospital.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.banco.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.hospital.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/banco.com/peers/peer0.banco.com/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/banco.com/peers/peer0.banco.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.banco.com:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/hospital.com/peers/peer0.hospital.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/hospital.com/peers/peer0.hospital.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.hospital.com:/var/hyperledger/production
     ports:
       - 7051:7051
 

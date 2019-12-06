@@ -9,13 +9,13 @@ app.use(bodyParser.json());
 
 // Setting for Hyperledger Fabric
 const { FileSystemWallet, Gateway } = require('fabric-network');
-const ccpPath = yaml.safeLoad(fs.readFileSync('/home/lucas/rede_primeup/gateway/networkConnection.yaml', 'utf8'));
+const ccpPath = yaml.safeLoad(fs.readFileSync('/home/lucas/rede_blockchain/gateway/networkConnection.yaml', 'utf8'));
 
 app.get('/api/buscapacientes', async function (req, res) {
     try {
 
-        const userName = 'Admin@banco.com';
-        const wallet = new FileSystemWallet('/home/lucas/rede_primeup/identity/user/admin/wallet');
+        const userName = 'Admin@hospital.com';
+        const wallet = new FileSystemWallet('/home/lucas/rede_blockchain/identity/user/admin/wallet');
         
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: userName, discovery: { enabled: true, asLocalhost: false } });
@@ -37,8 +37,8 @@ app.get('/api/buscapacientes', async function (req, res) {
 app.get('/api/buscapaciente/:paciente_index', async function (req, res) {
     try {
 
-        const userName = 'Admin@banco.com';
-        const wallet = new FileSystemWallet('/home/lucas/rede_primeup/identity/user/admin/wallet');
+        const userName = 'Admin@hospital.com';
+        const wallet = new FileSystemWallet('/home/lucas/rede_blockchain/identity/user/admin/wallet');
         
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: userName, discovery: { enabled: true, asLocalhost: false } });
@@ -48,7 +48,7 @@ app.get('/api/buscapaciente/:paciente_index', async function (req, res) {
 
         const result = await contract.evaluateTransaction('queryPaciente', req.params.paciente_index);
         let paciente = JSON.parse(result.toString());
-        res.status(200).json({paciente: paciente});
+        res.status(200).json(paciente);
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         res.status(500).json({error: error});
@@ -59,8 +59,8 @@ app.get('/api/buscapaciente/:paciente_index', async function (req, res) {
 app.post('/api/adicionapaciente/:paciente_index', async function (req, res) {
     try {
 
-        const userName = 'Admin@banco.com';
-        const wallet = new FileSystemWallet('/home/lucas/rede_primeup/identity/user/admin/wallet');
+        const userName = 'Admin@hospital.com';
+        const wallet = new FileSystemWallet('/home/lucas/rede_blockchain/identity/user/admin/wallet');
         
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: userName, discovery: { enabled: false, asLocalhost: true } });
@@ -84,8 +84,8 @@ app.post('/api/adicionapaciente/:paciente_index', async function (req, res) {
 app.put('/api/mudarestadopaciente/:paciente_index', async function (req, res) {
     try {
 
-        const userName = 'Admin@banco.com';
-        const wallet = new FileSystemWallet('/home/lucas/rede_primeup/identity/user/admin/wallet');
+        const userName = 'Admin@hospital.com';
+        const wallet = new FileSystemWallet('/home/lucas/rede_blockchain/identity/user/admin/wallet');
         
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: userName, discovery: { enabled: false, asLocalhost: true } });

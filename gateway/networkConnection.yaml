@@ -1,6 +1,6 @@
 ---
 
-name: "rede.primeup"
+name: "rede.lucas"
 
 x-type: "hlfv1"
 
@@ -16,10 +16,10 @@ channels:
   meucanal:
 
     orderers:
-      - ordenador.primeup.com
+      - ordenador.lucas.com
 
     peers:
-      peer0.banco.com:
+      peer0.hospital.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -30,28 +30,28 @@ organizations:
     mspid: Org1MSP
 
     peers:
-      - peer0.banco.com
+      - peer0.hospital.com
 
 orderers:
-  ordenador.primeup.com:
+  ordenador.lucas.com:
 
     url: grpcs://localhost:7050
 
     grpcOptions:
-      ssl-target-name-override: ordenador.primeup.com
+      ssl-target-name-override: ordenador.lucas.com
 
     tlsCACerts:
-      path: /home/lucas/rede_primeup/crypto-config/ordererOrganizations/primeup.com/tlsca/tlsca.primeup.com-cert.pem
+      path: /home/lucas/rede_blockchain/crypto-config/ordererOrganizations/lucas.com/tlsca/tlsca.lucas.com-cert.pem
 
 peers:
-  peer0.banco.com:
+  peer0.hospital.com:
 
     url: grpcs://localhost:7051
 
     grpcOptions:
-      ssl-target-name-override: peer0.banco.com
-      hostnameOverride: peer0.banco.com
+      ssl-target-name-override: peer0.hospital.com
+      hostnameOverride: peer0.hospital.com
       request-timeout: 120
 
     tlsCACerts:
-      path: /home/lucas/rede_primeup/crypto-config/peerOrganizations/banco.com/tlsca/tlsca.banco.com-cert.pem
+      path: /home/lucas/rede_blockchain/crypto-config/peerOrganizations/hospital.com/tlsca/tlsca.hospital.com-cert.pem

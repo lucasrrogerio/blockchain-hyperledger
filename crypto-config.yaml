@@ -4,15 +4,15 @@
 #
 
 OrdererOrgs:
-  - Name: PrimeUp
-    Domain: primeup.com
+  - Name: Lucas
+    Domain: lucas.com
     EnableNodeOUs: true
     Specs:
       - Hostname: ordenador
 
 PeerOrgs:
-  - Name: Banco
-    Domain: banco.com
+  - Name: Hospital
+    Domain: hospital.com
     EnableNodeOUs: true
     Template:
       Count: 1

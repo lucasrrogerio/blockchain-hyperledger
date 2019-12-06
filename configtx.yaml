@@ -8,7 +8,7 @@ Organizations:
     - &OrdererOrg
         Name: OrdererOrg
         ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/primeup.com/msp
+        MSPDir: crypto-config/ordererOrganizations/lucas.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -23,7 +23,7 @@ Organizations:
     - &Org1
         Name: Org1MSP
         ID: Org1MSP
-        MSPDir: crypto-config/peerOrganizations/banco.com/msp
+        MSPDir: crypto-config/peerOrganizations/hospital.com/msp
         Policies:
             Readers:
                 Type: Signature
@@ -35,7 +35,7 @@ Organizations:
                 Type: Signature
                 Rule: "OR('Org1MSP.admin')"
         AnchorPeers:
-            - Host: peer0.banco.com
+            - Host: peer0.hospital.com
               Port: 7051
 
     - &Org2
@@ -90,7 +90,7 @@ Application: &ApplicationDefaults
 Orderer: &OrdererDefaults
     OrdererType: solo
     Addresses:
-        - ordenador.primeup.com:7050
+        - ordenador.lucas.com:7050
     BatchTimeout: 2s
     BatchSize:
         MaxMessageCount: 10
@@ -164,7 +164,7 @@ Profiles:
             OrdererType: kafka
             Kafka:
                 Brokers:
-                - kafka.primeup.com:9092
+                - kafka.lucas.com:9092
 
             Organizations:
             - *OrdererOrg
@@ -189,12 +189,12 @@ Profiles:
             OrdererType: etcdraft
             EtcdRaft:
                 Consenters:
-                - Host: ordenador.primeup.com
+                - Host: ordenador.lucas.com
                   Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/primeup.com/orderers/ordenador.primeup.com/tls/server.crt
+                  ClientTLSCert: crypto-config/ordererOrganizations/lucas.com/orderers/ordenador.lucas.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/lucas.com/orderers/ordenador.lucas.com/tls/server.crt
             Addresses:
-                - ordenador.primeup.com:7050
+                - ordenador.lucas.com:7050
 
             Organizations:
             - *OrdererOrg

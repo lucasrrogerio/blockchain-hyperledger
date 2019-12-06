@@ -20,12 +20,12 @@ async function main() {
     try {
 
         // Identity to credentials to be stored in the wallet
-        const credPath = path.join(fixtures, '/crypto-config/peerOrganizations/banco.com/users/Admin@banco.com');
-        const cert = fs.readFileSync(path.join(credPath, '/msp/signcerts/Admin@banco.com-cert.pem')).toString();
+        const credPath = path.join(fixtures, '/crypto-config/peerOrganizations/hospital.com/users/Admin@hospital.com');
+        const cert = fs.readFileSync(path.join(credPath, '/msp/signcerts/Admin@hospital.com-cert.pem')).toString();
         const key = fs.readFileSync(path.join(credPath, '/msp/keystore/6be5bafdf5d0122cbf5cb5c64ee7a9c6540b7cc8f5e7ebae4a83f7569446e0b3_sk')).toString();
 
         // Load credentials into wallet
-        const identityLabel = 'Admin@banco.com';
+        const identityLabel = 'Admin@hospital.com';
         const identity = X509WalletMixin.createIdentity('Org1MSP', cert, key);
 
         await wallet.import(identityLabel, identity);

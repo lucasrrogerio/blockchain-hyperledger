@@ -12,8 +12,8 @@ services:
   peer0.cliente.com:
     container_name: peer0.cliente.com
     extra_hosts:
-      - "ordenador.primeup.com:{NODE1}"
-      - "peer0.banco.com:{NODE1}"
+      - "ordenador.lucas.com:{NODE1}"
+      - "peer0.hospital.com:{NODE1}"
     extends:
       file: base/docker-compose-base.yaml
       service: peer0.cliente.com
@@ -23,8 +23,8 @@ services:
   peer1.cliente.com:
     container_name: peer1.cliente.com
     extra_hosts:
-      - "ordenador.primeup.com:{NODE1}"
-      - "peer0.banco.com:{NODE1}"
+      - "ordenador.lucas.com:{NODE1}"
+      - "peer0.hospital.com:{NODE1}"
     extends:
       file: base/docker-compose-base.yaml
       service: peer1.cliente.com
@@ -34,7 +34,7 @@ services:
   cli:
     container_name: cli
     extra_hosts:
-      - "ordenador.primeup.com:{NODE1}"    
+      - "ordenador.lucas.com:{NODE1}"    
     image: hyperledger/fabric-tools:latest
     tty: true
     stdin_open: true
